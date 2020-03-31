@@ -12,6 +12,8 @@ import org.apache.ibatis.logging.LogFactory;
 import org.junit.Assert;
 import org.junit.Test;
 
+import mybatis_study.jdbc.HikariCPFactory;
+
 public class HikariCPFactoryTest {
 
 	private static final Log log = LogFactory.getLog(HikariCPFactoryTest.class);

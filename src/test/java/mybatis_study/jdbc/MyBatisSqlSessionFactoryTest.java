@@ -6,6 +6,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.junit.Assert;
 import org.junit.Test;
 
+import mybatis_study.jdbc.MyBatisSqlSessionFactory;
+
 public class MyBatisSqlSessionFactoryTest {
 
 	  private static final Log log = LogFactory.getLog(MyBatisSqlSessionFactoryTest.class);
