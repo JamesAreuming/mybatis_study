@@ -21,3 +21,14 @@ select stud_id, name, email, dob, phone,
 	
 -- 리스트
 select STUD_ID as studId, NAME, EMAIL, PHONE, DOB from students;
+
+desc students;
+
+insert into students(stud_id, name, email, phone, dob)
+values(3, '정아름', 'hothihi5@gmail.com', '010-4252-3245', '1988-10-20');
+
+select * from students;
+
+delete from students where stud_id = 3;
+
+select * from students;
