@@ -32,3 +32,9 @@ select * from students;
 delete from students where stud_id = 3;
 
 select * from students;
+
+update students
+	set name='정미녀', email='pinkmiin@naver.com', phone='010-1234-4567', dob='2000-10-20'
+where stud_id=3;
+
+select * from students;
