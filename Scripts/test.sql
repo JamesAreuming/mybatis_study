@@ -29,7 +29,7 @@ values(3, '정아름', 'hothihi5@gmail.com', '010-4252-3245', '1988-10-20');
 
 select * from students;
 
-delete from students where stud_id = 3;
+delete from students where stud_id = 5;
 
 select * from students;
 
@@ -38,3 +38,32 @@ update students
 where stud_id=3;
 
 select * from students;
+
+select user(),database();
+
+show tables;
+
+select * from addresses;
+
+	select stud_id, name, email, phone, dob, a.addr_id, street, city, state, zip, country
+		from students s join addresses a on s.addr_id = a.addr_id
+		where stud_id = 1;
+		
+select * from courses;
+
+select * from tutors;
+
+select t.tutor_id , t.name, t.email, c.course_id, c.name, c.description, c.start_date, c.end_date
+	from tutors t left outer join courses c on t.tutor_id  = c.tutor_id
+	where t.tutor_id = 1;
+	
+
+desc students;
+
+alter table students add gender tinyint unsigned;
+
+select * from students;
+
+
+insert into students(stud_id, name, email, phone, dob, gender)
+values(4, 'test', 'test@naver.com', '010-1111-1111', '1990-10-10', 1);

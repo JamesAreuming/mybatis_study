@@ -17,6 +17,7 @@ import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
 import mybatis_study.AbstractTest;
+import mybatis_study.dto.Gender;
 import mybatis_study.dto.PhoneNumber;
 import mybatis_study.dto.Student;
 import mybatis_study.mappers.impl.StudentMapperImpl;
@@ -44,7 +45,7 @@ public class StudentMapperTest extends AbstractTest{
 	public void tearDown() throws Exception {
 	}
 
-	@Test
+//	@Test
 	public void test01SelectStudentByNO() {
 		log.debug(Thread.currentThread().getStackTrace()[1].getMethodName()+"()");
 		Student student = new Student();
@@ -54,7 +55,7 @@ public class StudentMapperTest extends AbstractTest{
 		Assert.assertEquals(student.getStudId(), selectStudent.getStudId());
 	}
 	
-	@Test
+	//@Test
 	public void test02SelectStudentByNoWithResultMap() {
 		log.debug(Thread.currentThread().getStackTrace()[1].getMethodName()+"()");
 		Student student = new Student();
@@ -64,7 +65,7 @@ public class StudentMapperTest extends AbstractTest{
 		Assert.assertEquals(student.getStudId(), selectStudent.getStudId());
 	}
 	
-	@Test
+//	@Test
 	public void test03SelectStudentByAll() {
 		log.debug(Thread.currentThread().getStackTrace()[1].getMethodName()+"()");
 		List<Student> lists = dao.selectStudentByAll();
@@ -111,7 +112,7 @@ public class StudentMapperTest extends AbstractTest{
 		Assert.assertSame(1, result);
 	}
 	
-	@Test
+	//@Test
 	public void test06SelectStudentByAllForResultMap() {
 		log.debug(Thread.currentThread().getStackTrace()[1].getMethodName()+"()");
 		List<Student> lists = dao.selectStudentByAllForResultMap();
@@ -122,7 +123,7 @@ public class StudentMapperTest extends AbstractTest{
 		}
 	}
 	
-	@Test
+	//@Test
 	public void test07SelectStudentByAllForHashMap() {
 		log.debug(Thread.currentThread().getStackTrace()[1].getMethodName()+"()");
 		List<Map<String, Object>> lists = dao.selectStudentByAllForHashMap();
@@ -134,6 +135,45 @@ public class StudentMapperTest extends AbstractTest{
 			}
 		}
 	}
+	
+	//@Test
+	public void test08SelectStudentByNoAssociation() {
+		log.debug(Thread.currentThread().getStackTrace()[1].getMethodName() + "()");
+		Student student = new Student();
+		student.setStudId(1);
+		Student selectStd = dao.selectStudentByNoAssociation(student);
+		Assert.assertNotNull(selectStd);
+		log.debug(selectStd.toString());
 	}
+	
+	@Test
+	public void test09InsertEnumStudent() {
+		log.debug(Thread.currentThread().getStackTrace()[1].getMethodName() + "()");
+		
+		Calendar newDate = GregorianCalendar.getInstance();
+		newDate.set(1990,2,28);
+		Student student = new Student();
+		student.setStudId(5);
+		student.setName("test2");
+		student.setEmail("test2@naver.com");
+		student.setDob(newDate.getTime());
+		student.setPhone(new PhoneNumber("010-1234-1234"));
+		student.setGrnder(Gender.FEMALE);
+		int res = dao.insertEnumStudent(student);
+		Assert.assertEquals(1, res);
+		
+		student.setStudId(6);
+		student.setName("test3");
+		student.setEmail("test1@naver.com");
+		student.setDob(newDate.getTime());
+		student.setPhone(new PhoneNumber("010-1235-1235"));
+		student.setGrnder(Gender.MALE);
+		int res1 = dao.insertEnumStudent(student);
+		Assert.assertEquals(1, res1);
+		
+		
+	}
+}
+	
 
 

@@ -74,4 +74,19 @@
 <select id="selectStudentByAllForHashMap" resultType="map">
 	<include refid="selectSQL"/>
 </select>
+
+<resultMap type="Student" id="StudentAssociation" extends="StudentResult">
+	<association property="address" resultMap="mybatis_study.mappers.AddressMapper.AddressResult"/>
+</resultMap>
+
+<select id="selectStudentByNoAssociation" parameterType="Student" resultMap="StudentAssociation">
+	select stud_id, name, email, phone, dob, a.addr_id, street, city, state, zip, country
+		from students s join addresses a on s.addr_id = a.addr_id
+		where stud_id = #{studId}
+</select>
+
+<insert id="insertEnumStudent" parameterType="Student">
+	insert into students(stud_id, name, email, phone, dob, gender)
+	values(#{studId}, #{name}, #{email}, #{phone}, #{dob}, #{gender})
+</insert>
 </mapper>

@@ -22,4 +22,9 @@ public interface StudentMapper {
 	List<Student> selectStudentByAllForResultMap();
 	//결과매핑 : HashMap
 	List<Map<String, Object>> selectStudentByAllForHashMap();
+	
+	Student selectStudentByNoAssociation(Student student);
+	
+	//enum 다루기
+	int insertEnumStudent(Student student);
 }
