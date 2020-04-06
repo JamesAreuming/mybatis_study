@@ -55,5 +55,17 @@
 	<select id="selectWhereCourses" parameterType="map" resultMap="CourseResult">
 		<include refid="selectSQL"/>
 		<include refid="whereSQL"/>
+	</select>
+	
+	<select id="selectTrimCourses" parameterType="map" resultMap="CourseResult">
+		<include refid="selectSQL"/>
+		<trim prefix = "WHERE" prefixOverrides="AND/OR">
+			<if test="tutorId != null">
+				tutor_id !=#{tutorId}
+			</if>
+			<if test="courseName != null">
+				and name like #{courseName}
+			</if>		
+		</trim>
 	</select>	
 </mapper>

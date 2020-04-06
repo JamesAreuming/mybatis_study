@@ -73,3 +73,7 @@ desc user_pics;
 select * from user_pics;
 
 show tables;
+
+select * from courses WHERE name like '%ja%';
+select * from courses WHERE tutor_id !=1; 
+

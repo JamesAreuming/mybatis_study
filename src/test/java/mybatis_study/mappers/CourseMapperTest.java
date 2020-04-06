@@ -140,5 +140,29 @@ public class CourseMapperTest extends AbstractTest{
 			log.trace(c.toString());
 		}
 	}
+	
+	@Test
+	public void test06SelectTrimCourses() {
+		log.debug(Thread.currentThread().getStackTrace()[1].getMethodName()+"()");	
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		ListTrimCourses(map);
+		
+		map.put("tutorId", 1);
+		ListTrimCourses(map);
+		
+		map.clear();		
+		map.put("courseName", "%java%");
+		map.put("tutorId", 1);
+		ListTrimCourses(map);
 	}
+
+	private void ListTrimCourses(Map<String, Object> map) {
+		List<Course> courses = dao.selectTrimCourses(map);
+		Assert.assertNotNull(courses);
+		for(Course c : courses) {
+			log.trace(c.toString());
+		}
+	}
+}
 

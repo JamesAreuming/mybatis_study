@@ -42,4 +42,11 @@ public class CourseMapperImpl implements CourseMapper{
 		}
 	}
 
+	@Override
+	public List<Course> selectTrimCourses(Map<String, Object> map) {
+		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession()) {	
+			return  sqlSession.selectList(namespace+".selectTrimCourses", map);
+		}
+	}
+
 }
