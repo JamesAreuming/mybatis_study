@@ -67,3 +67,7 @@ select * from students;
 
 insert into students(stud_id, name, email, phone, dob, gender)
 values(4, 'test', 'test@naver.com', '010-1111-1111', '1990-10-10', 1);
+
+desc user_pics;
+
+select * from user_pics;
