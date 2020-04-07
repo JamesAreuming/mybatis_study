@@ -24,16 +24,11 @@ public class UserPicMapperImpl implements UserPicMapper{
 
 	@Override
 	public int insertUserPic(UserPic userPic) {
-		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession()) {
 			return sqlSession.insert(namespace + ".insertUserPic", userPic);
-		}
 	}
 
 	@Override
 	public UserPic getUserPic(int id) {
-		try (SqlSession sqlSession = MyBatisSqlSessionFactory.openSession()) {
 			return sqlSession.selectOne(namespace + ".getUserPic", id);
-		}
 	}
-
 }

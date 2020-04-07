@@ -24,21 +24,20 @@ import mybatis_study.mappers.impl.UserPicMapperImpl;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class UserPicMapperTest extends AbstractTest{
-	private static UserPicMapper dao;
-	private static UserPicMapperImpl daoImpl;
+	private static UserPicMapperImpl dao;
 	private static SqlSession sqlSession;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		dao = UserPicMapperImpl.getInstance();
-       // sqlSession = MyBatisSqlSessionFactory.openSession();
-        //daoImpl.setSqlSession(sqlSession);		
+		sqlSession = MyBatisSqlSessionFactory.openSession(true);
+        dao.setSqlSession(sqlSession);		
 	}
 
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
 		dao = null;
-       // sqlSession.close();
+       sqlSession.close();
 	}
 
 	@Before

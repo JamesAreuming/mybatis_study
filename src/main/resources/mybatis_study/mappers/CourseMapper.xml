@@ -67,5 +67,60 @@
 				and name like #{courseName}
 			</if>		
 		</trim>
-	</select>	
+	</select>
+	
+	<select id="selectCourseForeachbyTutors" parameterType="map" resultMap="CourseResult">
+		<include refid="selectSQL"/>
+		<if test="tutorIds !=null">
+			<where>
+				tutor_id in
+				<foreach item="tutorId" collection="tutorIds" index="index" open="(" close=")" separator=",">
+					#{tutorId}
+				</foreach>
+			</where>
+		</if>
+	</select>
+		
+	<insert id="insertCourses" parameterType="map">
+		insert into courses(course_id, name, description, start_date, end_date, tutor_id) values
+		<foreach collection="tutors" item="item" separator="," index="index">
+			(#{item.courseId}, #{item.name}, #{item.description}, #{item.startDate}, #{item.endDate}, #{item.tutorId})
+		</foreach>
+	</insert>
+	
+	<delete id="deletecourses" parameterType="map">
+		delete from courses
+		<where>
+			course_id in
+			<foreach collection="courseIds" item="courseId" index="index" open="(" close=")" separator=",">
+				#{courseId}
+			</foreach>
+		</where>
+	</delete>
+	
+	<insert id="insertCourse" parameterType="Course">
+		insert into courses(course_id, name, description, start_date, end_date, tutor_id)
+		values(#{courseId}, #{name}, #{description}, #{startDate}, #{endDate}, #{tutorId})
+	</insert>
+	
+	<delete id="deleteCourse" parameterType="int">
+		delete from courses where course_id = #{courseId};
+	</delete>
+
+	<!-- procedure -->
+	<parameterMap id="paramMap" type="map" >
+	    <parameter property="tutor_id" mode="IN" jdbcType="INTEGER" />
+	</parameterMap>
+	
+	<select id="getCourseCountByTutor" statementType="CALLABLE" parameterMap="paramMap" resultType="CourseStat">
+	    { call course_total(?) }
+	</select>
+	
+	<select id="getCourseCountByTutor2" statementType="CALLABLE" parameterType="map" resultType="CourseStat">
+	    { call course_total(#{tutor_id, mode=IN, jdbcType=INTEGER}) }
+	</select>
+	
+	<select id="getCourseCountByTutor3"  statementType="CALLABLE" resultType="CourseStat">
+	    { call course_total(#{param1, mode=IN, jdbcType=INTEGER}) }
+	</select>
 </mapper>

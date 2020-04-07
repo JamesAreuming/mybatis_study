@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.apache.ibatis.session.SqlSession;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -17,25 +18,32 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
+import com.sun.javafx.image.impl.ByteIndexed.Getter;
+
 import mybatis_study.AbstractTest;
 import mybatis_study.dto.Gender;
 import mybatis_study.dto.PhoneNumber;
 import mybatis_study.dto.Student;
+import mybatis_study.jdbc.MyBatisSqlSessionFactory;
 import mybatis_study.mappers.impl.StudentMapperImpl;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class StudentMapperTest extends AbstractTest{
 
-	private static StudentMapper dao;
+	private static StudentMapperImpl dao;
+	private static SqlSession sqlSession;
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		dao = StudentMapperImpl.getInstance();
+		sqlSession = MyBatisSqlSessionFactory.openSession(true);
+		dao.setSqlSession(sqlSession);
 	}
 
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
 		dao = null;
+		sqlSession.close();
 	}
 
 	@Before
@@ -192,6 +200,7 @@ public class StudentMapperTest extends AbstractTest{
 		student = dao.selectAllStudentByMap(maps);
 		log.debug(student.toString());
 	}
+	
 	@Test
 	public void test11SelectAllStudentForMap() {
 		log.debug(Thread.currentThread().getStackTrace()[1].getMethodName() + "()");
@@ -200,9 +209,27 @@ public class StudentMapperTest extends AbstractTest{
 	
 	for(Entry<Integer, String>entry : map.entrySet()) {
 		System.out.printf("KEY[%s] --- VALUE[%S]%n", entry.getKey(), entry.getValue());
+		}
 	}
+	
+	@Test
+	public void test12UpdateSetStudent() {
+		log.debug(Thread.currentThread().getStackTrace()[1].getMethodName() + "()");
+		Student student = new Student();
+		student.setStudId(1);
+		student.setPhone(new PhoneNumber("987-654-3211"));
+		student.setDob(new Date());
+		
+		int result = dao.updateSetStudent(student);
+		Assert.assertSame(1, result);
+		
+		student.setPhone(new PhoneNumber("123-123-1234"));
+		student.setDob(new GregorianCalendar(1988,04,25).getTime());
+		
+		result = dao.updateSetStudent(student);
+		Assert.assertSame(1, result);
 	}
-	}
+}
 
 	
 

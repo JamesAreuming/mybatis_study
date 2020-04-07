@@ -77,3 +77,26 @@ show tables;
 select * from courses WHERE name like '%ja%';
 select * from courses WHERE tutor_id !=1; 
 
+select * from courses;
+
+select * from students;
+
+
+DELETE FROM courses 
+WHERE (course_id =4)
+   or (course_id =5)
+   or (course_id =6);
+
+
+  
+drop procedure if exists course_total;
+
+delimiter $$
+$$
+create procedure course_total(in tutor_id int)
+begin
+	select t.name as tutor, ifnull(count(c.name),0) as total
+	from tutors t left join courses c on t.tutor_id = c.tutor_id
+	where t.tutor_id = tutor_id;
+end $$
+delimiter ;

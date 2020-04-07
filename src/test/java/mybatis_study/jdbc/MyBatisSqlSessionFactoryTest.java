@@ -14,7 +14,7 @@ public class MyBatisSqlSessionFactoryTest {
 	@Test
 	public void testOpenSession() {
 	      log.debug(Thread.currentThread().getStackTrace()[1].getMethodName()+"()");
-	      SqlSession session = MyBatisSqlSessionFactory.openSession();
+	      SqlSession session = MyBatisSqlSessionFactory.openSession(true);
 	      log.debug("session " + session);
 	      Assert.assertNotNull(session);
 	      session.close(); // 반드시 close()
